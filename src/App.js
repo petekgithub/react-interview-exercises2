@@ -4,6 +4,9 @@ import "./App.css";
 import Profile from "./components/Profile";
 import Home from "./components/Home";
 import { UserData } from "./contexts/GlobalContext";
+import getUsers from "./getAllUsers";
+
+import useGetDatas from "./hooks/useGetDatas";
 
 //---------------------------------Rest---------------------------------------------------------
 // function App() {
@@ -69,15 +72,85 @@ import { UserData } from "./contexts/GlobalContext";
 
 //---------------------------------ContextAPI--------------------------------------------------
 
+// function App() {
+//   const [name, setName] = useState("Petek");
+
+//   return (
+//     <div className="App">
+//       <UserData.Provider value={{ name, setName }}>
+//         <Profile />
+//         <Home />
+//       </UserData.Provider>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+//-----------------------Helper functions---------------------------------------------------
+// console.log(data) will return the Promise so for that reason we'll use async await
+// function App() {
+//   const getUsersHelper = async () => {
+//     let data = await getUsers();
+//     console.log(data);
+//   };
+
+//   useEffect(() => {
+//     getUsersHelper();
+//   }, []);
+
+//   return <div className="App" >Helper functions</div>;
+// }
+
+//-------------------------Running Arrays of Functions-------------------------------------
+/**
+ * Write a function which takes an array of multiple functions and executes them one by one, in left to right manner.
+ */
+// function App() {
+//   const fnArray = [
+//     function fn(a, b) {
+//       return a + b;
+//     },
+//     function fn(a, b) {
+//       return a - b;
+//     },
+//     function fn(a, b) {
+//       return a * b;
+//     },
+//     function fn(a, b) {
+//       return a / b;
+//     },
+//   ];
+
+//   const mainFn = () => {
+//     let result = fnArray.map((fn) => {
+//       return fn(3, 5);
+//     });
+//     console.log(result);
+//   };
+
+//   useEffect(() => {
+//     mainFn();
+//   }, []);
+
+//   return <div className="App"></div>;
+// }
+
+// export default App;
+
+//-----------------------------------CustomHooks-----------------------------------------------------
 function App() {
-  const [name, setName] = useState("Petek");
+  let { users, posts } = useGetDatas; // destructure the data, comes from the custom hook
 
   return (
     <div className="App">
-      <UserData.Provider value={{ name, setName }}>
-        <Profile />
-        <Home />
-      </UserData.Provider>
+      <h1>{users}</h1>
+      <div>
+        {users.map((user) => {
+          <li key={user.id}>{user.name}</li>;
+        })}
+      </div>
+      <h2>{posts}</h2>
     </div>
   );
 }
